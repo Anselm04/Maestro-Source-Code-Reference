@@ -43,7 +43,7 @@ jobs:
               p=src/name
               if not p.is_file() or p.is_symlink() or p.stat().st_size>=100*1024*1024:
                   excluded.append(name); continue
-              data=p.read_bytes()
+              data=subprocess.check_output(['git','-C',str(src),'cat-file','blob',expected])
               actual=hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest()
               if actual!=expected: raise RuntimeError(name)
               target=dst/name
@@ -60,6 +60,7 @@ jobs:
           (meta/'EXCLUDED.txt').write_text('\n'.join(excluded)+'\n')
           PY
           git add -f .trillionai-reference
+          git -c core.autocrlf=false diff --cached --stat >/dev/null
           git diff --cached --quiet && exit 0
           git commit -m "Import verified Maestro upstream source"
           git push origin HEAD:main
