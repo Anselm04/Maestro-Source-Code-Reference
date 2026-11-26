@@ -1,0 +1,5 @@
+Upstream: https://github.com/mobile-dev-inc/Maestro
+Revision: f99dc33d89cc4be6cda19e921c1c91ee14d08152
+Copied files: 1580
+Excluded files: 15
+Upstream automation and unsupported entries excluded; original licences retained.
